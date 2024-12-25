@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Monthly Smoking Projection</title>
+  <!-- Bootstrap CSS (Optional) -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  />
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-dark text-light">
+
+<div class="container py-5">
+  <h1 class="text-center mb-4">Smoking Cost vs. Invested Projection</h1>
+
+  <!-- Chart Canvas -->
+  <div class="bg-white rounded p-4">
+    <canvas id="projectionChart"></canvas>
+  </div>
+</div>
+
+<!-- Bootstrap JS (Optional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Example: 12 months of data
+  const labels = [...Array(12).keys()].map(i => `Month ${i+1}`);
+
+  // Example data for smoking cost each month
+  const monthlyCosts = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600];
+
+  // Example data for how much you'd have if you invested that same monthly cost instead
+  const investedValues = [52, 105, 160, 220, 285, 355, 430, 510, 595, 685, 780, 880];
+
+  new Chart(document.getElementById('projectionChart'), {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Smoking Cost Over Time',
+          data: monthlyCosts,
+          borderColor: 'rgba(255, 51, 51, 1)',     // Red
+          backgroundColor: 'rgba(255, 51, 51, 0.2)', 
+          fill: true,
+          tension: 0.2
+        },
+        {
+          label: 'If Invested Instead',
+          data: investedValues,
+          borderColor: 'rgba(51, 153, 255, 1)',    // Blue
+          backgroundColor: 'rgba(51, 153, 255, 0.2)',
+          fill: true,
+          tension: 0.2
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { 
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Dollars ($)'
+          }
+        }
+      }
+    }
+  });
+</script>
+</body>
+</html>

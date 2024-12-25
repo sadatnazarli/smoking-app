@@ -1,0 +1,79 @@
+/* ===========================
+   Animations & Effects
+   =========================== */
+
+/* Simple fade-in */
+.fade-in {
+    animation: fadeIn 1.2s ease-in-out;
+}
+@keyframes fadeIn {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Slightly delayed fade-in (e.g. used after page load) */
+.fade-in-late {
+    animation: fadeInLate 1.5s ease-in-out;
+}
+@keyframes fadeInLate {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Zoom-in animation (often used for results container) */
+.animate-zoom-in {
+    animation: zoomIn 0.8s ease-in-out;
+}
+@keyframes zoomIn {
+    0% {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Fun bounce animation for a logo (if needed) */
+.logo-bounce,
+.animate-logo-bounce {
+    animation: bounceLogo 1.5s infinite;
+}
+@keyframes bounceLogo {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* ===========================
+   Components & Containers
+   =========================== */
+
+/* Style for a cigarette logo or any image-based logo */
+.cigarette-logo {
+    width: 100px;
+    height: auto;
+}
+
+/* Chart container sizing if needed */
+.chart-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Results box styling (if you want a light background for result text) */
+.results-container {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+}

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ t['faq_page_title'] }}</title>
+  <!-- Bootstrap CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  />
+  <style>
+    body {
+      background-color: #000 !important;
+      color: #fff !important;
+    }
+    .navbar {
+      background-color: #b30000 !important;
+    }
+    .btn-calc {
+      background-color: #b30000 !important;
+      color: #fff !important;
+    }
+    footer {
+      background-color: #b30000 !important;
+    }
+    /* Style the accordion headings to stand out on the black background */
+    .accordion-button {
+      background-color: #222 !important;
+      color: #ffd700 !important;
+    }
+    .accordion-button:focus {
+      box-shadow: none !important;
+    }
+    .accordion-button:not(.collapsed) {
+      color: #ff4d4d !important; /* if expanded, make it red text */
+      background-color: #333 !important;
+    }
+    .accordion-body {
+      background-color: #111 !important;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index', lang=lang) }}">
+      <img
+        src="{{ url_for('static', filename='img/mb-new.png') }}"
+        alt="{{ t['nav_brand'] }} Logo"
+        width="45"
+        height="45"
+        class="me-2"
+      />
+      <span>{{ t['nav_brand'] }}</span>
+    </a>
+    <button 
+      class="navbar-toggler text-light" 
+      type="button" 
+      data-bs-toggle="collapse" 
+      data-bs-target="#navbarSupportedContent" 
+      aria-controls="navbarSupportedContent" 
+      aria-expanded="false" 
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto">
+        <!-- Language dropdown again for consistency -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {% if lang == 'tr' %} Türkçe
+            {% elif lang == 'az' %} Azərbaycanca
+            {% else %} English
+            {% endif %}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="?lang=en">English</a></li>
+            <li><a class="dropdown-item" href="?lang=tr">Türkçe</a></li>
+            <li><a class="dropdown-item" href="?lang=az">Azərbaycanca</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container py-5">
+  <h1 class="mb-4">{{ t['faq_page_title'] }}</h1>
+  <p>{{ t['faq_intro'] }}</p>
+
+  <!-- Bootstrap 5 Accordion -->
+  <div class="accordion" id="accordionFAQ">
+    <!-- Q1 -->
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+          {{ t['faq_q1'] }}
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+        <div class="accordion-body">
+          {{ t['faq_a1'] }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+          {{ t['faq_q2'] }}
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+        <div class="accordion-body">
+          {{ t['faq_a2'] }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingThree">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+          {{ t['faq_q3'] }}
+        </button>
+      </h2>
+      <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+        <div class="accordion-body">
+          {{ t['faq_a3'] }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Return to calculator -->
+  <div class="mt-4">
+    <a href="{{ url_for('index', lang=lang) }}" class="btn btn-calc">
+      {{ t['faq_return'] }}
+    </a>
+  </div>
+</div>
+
+<footer class="text-center text-white py-3 mt-5">
+  <span class="text-light">{{ t['footer_text'] }}</span>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

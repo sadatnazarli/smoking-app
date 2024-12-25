@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ t['page_title'] }}</title>
+  <!-- Bootstrap CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  />
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Optional Custom CSS -->
+  <style>
+    body {
+      background-color: #000000 !important; /* black theme */
+      color: #ffffff !important;           
+    }
+    .navbar {
+      background-color: #b30000 !important; /* red */
+    }
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.4rem;
+    }
+    .nav-link.dropdown-toggle {
+      color: #fff !important;
+    }
+    .dropdown-item {
+      color: #000 !important;
+    }
+    .form-label {
+      color: #ffd700 !important; /* gold labels */
+    }
+    .card {
+      background-color: #333 !important;
+      border: 1px solid #b30000 !important;
+    }
+    .form-control, .form-select {
+      background-color: #222 !important;
+      border: 1px solid #b30000 !important;
+      color: #fff !important;
+    }
+    .btn-calc {
+      background-color: #b30000 !important;
+      color: #fff !important;
+    }
+    .header-title {
+      color: #00ffff; /* cyan headings */
+      font-weight: bold;
+    }
+    .header-subtitle {
+      font-size: 1.1rem;
+      color: #ffcccb; /* lighter red/pink */
+    }
+    .text-danger {
+      color: #ff4d4d !important; /* slightly lighter red */
+    }
+    footer {
+      background-color: #b30000 !important;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index', lang=lang) }}">
+      <img
+        src="{{ url_for('static', filename='img/mb-new.png') }}"
+        alt="{{ t['nav_brand'] }} Logo"
+        width="45"
+        height="45"
+        class="me-2"
+      />
+      <span>{{ t['nav_brand'] }}</span>
+    </a>
+    <button 
+      class="navbar-toggler text-light" 
+      type="button" 
+      data-bs-toggle="collapse" 
+      data-bs-target="#navbarSupportedContent" 
+      aria-controls="navbarSupportedContent" 
+      aria-expanded="false" 
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Language + FAQ in navbar -->
+      <ul class="navbar-nav ms-auto">
+        <!-- FAQ link -->
+        <li class="nav-item me-3">
+          <a class="nav-link text-light" href="{{ url_for('faq', lang=lang) }}">
+            {{ t['label_faq'] }}
+          </a>
+        </li>
+
+        <!-- Language Dropdown on the right -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {% if lang == 'tr' %} Türkçe
+            {% elif lang == 'az' %} Azərbaycanca
+            {% else %} English
+            {% endif %}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="?lang=en">English</a></li>
+            <li><a class="dropdown-item" href="?lang=tr">Türkçe</a></li>
+            <li><a class="dropdown-item" href="?lang=az">Azərbaycanca</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <h1 class="header-title">{{ t['header_title'] }}</h1>
+    <p class="header-subtitle">{{ t['header_subtitle'] }}</p>
+  </div>
+
+  {% if not show_results %}
+    <!-- FORM SECTION -->
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card p-4 shadow">
+          <form method="POST">
+            <div class="mb-3">
+              <label for="age" class="form-label">{{ t['label_age'] }}</label>
+              <input
+                type="number"
+                id="age"
+                name="age"
+                class="form-control"
+                required
+                placeholder="e.g., 30"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="packs_per_day" class="form-label">{{ t['label_packs_day'] }}</label>
+              <input
+                type="number"
+                step="0.1"
+                id="packs_per_day"
+                name="packs_per_day"
+                class="form-control"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="cost_per_pack" class="form-label">{{ t['label_cost_pack'] }}</label>
+              <input
+                type="number"
+                step="0.01"
+                id="cost_per_pack"
+                name="cost_per_pack"
+                class="form-control"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="currency" class="form-label">{{ t['label_currency'] }}</label>
+              <select name="currency" id="currency" class="form-select">
+                <option value="USD">USD</option>
+                <option value="TL">TL</option>
+                <option value="AZN">AZN</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="years_projection" class="form-label">{{ t['label_projection'] }}</label>
+              <input
+                type="number"
+                step="1"
+                id="years_projection"
+                name="years_projection"
+                class="form-control"
+                value="1"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="invest_rate" class="form-label">{{ t['label_invest'] }}</label>
+              <input
+                type="number"
+                step="0.1"
+                id="invest_rate"
+                name="invest_rate"
+                class="form-control"
+                value="5"
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-calc w-100"
+            >
+              {{ t['button_calculate'] }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  {% else %}
+    <!-- RESULTS SECTION -->
+    <div class="row justify-content-center">
+      <div class="col-md-8 text-center">
+        <!-- Life lost -->
+        <h2 class="text-danger">{{ t['result_life_lost'] }}</h2>
+        <!-- Use label_days -->
+        <h1 class="text-danger fw-bold">{{ days_lost_monthly }} {{ t['label_days'] }}</h1>
+
+        <!-- Death age -->
+        <h2 class="mt-5" style="color: #ffd700;">{{ t['result_death_age'] }}</h2>
+        <p class="fs-5">
+          {{ t['result_death_desc'].format(average_life_expectancy, predicted_death_age) }}
+        </p>
+
+        <!-- Cost data -->
+        <div class="mt-4 fs-5">
+          <p>{{ t['monthly_cost'] }} ({{ selected_currency }}): <strong>{{ monthly_cost }}</strong></p>
+          <p>{{ t['yearly_cost'] }} ({{ selected_currency }}): <strong>{{ yearly_cost }}</strong></p>
+          <p>{{ t['total_cost'].format(years_projection) }} ({{ selected_currency }}): 
+            <strong>{{ total_cost_projection }}</strong></p>
+          <p>{{ t['invested_instead'].format(invest_rate) }}: 
+            <strong>{{ future_value }} {{ selected_currency }}</strong></p>
+        </div>
+
+        <!-- Example line chart (12 months static data) -->
+        <div class="mt-5" style="max-width: 600px; margin:0 auto;">
+          <canvas id="projectionChart"></canvas>
+        </div>
+
+        <!-- Recalculate button -->
+        <a
+          href="{{ url_for('index', lang=lang) }}"
+          class="btn mt-4 btn-calc"
+        >
+          {{ t['recalculate'] }}
+        </a>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+<!-- FOOTER -->
+<footer class="text-center py-3 mt-5">
+  <span class="text-light">{{ t['footer_text'] }}</span>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+{% if show_results %}
+<script>
+  // Demo 12-month data for "Smoking Cost" vs. "Invested Instead"
+  const labels = [...Array(12).keys()].map(i => `Month ${i+1}`);
+  const monthlyCosts = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600];
+  const investedValues = [52, 105, 160, 220, 285, 355, 430, 510, 595, 685, 780, 880];
+
+  new Chart(document.getElementById('projectionChart'), {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Smoking Cost Over Time',
+          data: monthlyCosts,
+          borderColor: 'rgba(255, 51, 51, 1)',
+          backgroundColor: 'rgba(255, 51, 51, 0.2)',
+          fill: true,
+          tension: 0.2
+        },
+        {
+          label: 'If Invested Instead',
+          data: investedValues,
+          borderColor: 'rgba(51, 153, 255, 1)',
+          backgroundColor: 'rgba(51, 153, 255, 0.2)',
+          fill: true,
+          tension: 0.2
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+{% endif %}
+</body>
+</html>
