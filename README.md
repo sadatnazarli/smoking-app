@@ -90,28 +90,22 @@ future_value = monthly_contribution × ((1 + r)^n - 1) / r
 ## Project Structure
 
 ```
-smokex-calculator/
-├── app/
-│   ├── __init__.py
-│   ├── routes.py
-│   └── models.py
+smoking-app/
 ├── static/
 │   ├── css/
 │   │   └── style.css
-│   ├── js/
-│   │   └── script.js
-│   └── img/
-│       └── mb-new.png
+│   ├── img/
+│   │   ├── marlbro.jpg
+│   │   └── mb-new.png
+│   └── js/
 ├── templates/
-│   ├── base.html
+│   ├── faq.html
 │   ├── index.html
-│   └── faq.html
-├── translations/
-│   ├── tr/
-│   └── az/
-├── requirements.txt
-├── config.py
-└── README.md
+│   ├── login.html
+│   └── projection.html
+├── app.py
+├── README.md
+└── requirements.txt
 ```
 
 ## Technology Stack
