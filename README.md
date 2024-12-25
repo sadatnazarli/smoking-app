@@ -1,174 +1,150 @@
-Absolutely, here's the full markdown for the SmokeX Calculator README file:
-
-```markdown
 # SmokeX Calculator
 
-SmokeX is a modern, responsive web application that calculates the **financial** and **health impact** of smoking. The application estimates monthly costs, life expectancy reduction, and provides a comparison of how much you could save if you invested the money instead of smoking. The app supports **multiple languages**: English, Turkish, and Azerbaijani.
+A modern, responsive web application that calculates the financial and health impact of smoking. SmokeX estimates monthly costs, life expectancy reduction, and provides investment comparisons to demonstrate potential savings. The application supports multiple languages including English, Turkish, and Azerbaijani.
 
----
+## Features
 
-##  Features
+### Financial Analysis
+- Calculate monthly and yearly smoking expenses based on daily consumption
+- Support for multiple currencies (USD, TL, and AZN)
+- Project potential savings through investment alternatives
 
-**Smoking Cost Calculator**
+### Health Impact Assessment
+- Estimate monthly life expectancy reduction in days
+- Predict approximate death age based on average life expectancy
+- Visualize long-term health impacts
 
-* Calculates monthly and yearly smoking expenses based on daily consumption and pack cost.
-* Supports multiple currencies: USD, TL, and AZN.
+### User Experience
+- Interactive line charts showing costs and investment projections
+- Fully responsive design optimized for all devices
+- Modern black and red theme for enhanced visibility
+- Complete localization in English, Turkish, and Azerbaijani
+- Comprehensive FAQ section with interactive accordion design
 
-**Life Expectancy Reduction**
+## Installation
 
-* Estimates the monthly life lost in days due to smoking.
-* Predicts the approximate death age based on an average life expectancy of 75 years.
+### Prerequisites
+- Python 3.8 or higher
+- pip package manager
 
-**Investment Projection**
+### Local Setup
 
-* Displays potential savings if the money spent on smoking were invested with a compound annual return.
-
-**Chart Visualization**
-
-* Interactive line charts to display smoking costs and potential investment growth over time.
-
-**Multi-Language Support**
-
-* Fully localized interface with translations in English, Turkish, and Azerbaijani.
-
-**FAQ Page**
-
-* Detailed explanations of how calculations are performed.
-* Interactive accordion design for easy navigation.
-
-**Responsive Design**
-
-* Fully responsive UI optimized for mobile, tablet, and desktop devices.
-* Black and red theme for a sleek and modern look.
-
----
-
-##  How to Run Locally
-
-### 1. Clone the Repository
-
+1. Clone the repository
 ```bash
-git clone [https://github.com/your-username/smokex-calculator.git](https://github.com/your-username/smokex-calculator.git)
+git clone https://github.com/your-username/smokex-calculator.git
 cd smokex-calculator
 ```
 
-### 2. Set Up a Virtual Environment
-
+2. Create and activate virtual environment
 ```bash
+# Unix/macOS
 python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate
+
+# Windows
+python -m venv venv
+venv\Scripts\activate
 ```
 
-### 3. Install Dependencies
-
+3. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Run the Application
-
+4. Launch application
 ```bash
 flask run
 ```
 
-The app will be available at http://127.0.0.1:5000.
+Access the application at `http://127.0.0.1:5000`
 
----
+## Calculation Methodology
 
-##  How Calculations Work
+### Life Expectancy Impact
 
-**1. Monthly Life Lost**
+Each cigarette reduces life expectancy by approximately 11 minutes according to scientific estimates. For a standard pack of 20 cigarettes:
 
-Each cigarette reduces life expectancy by approximately 11 minutes (scientific estimate). A pack of 20 cigarettes reduces life expectancy by ~220 minutes.
-
-**Formula:**
-
-```sql
-Monthly Life Lost = Packs per Day × 30 × 220 minutes
-Converted to days: Minutes / (24 × 60)
+```python
+minutes_per_pack = 20 cigarettes × 11 minutes = 220 minutes
+monthly_life_lost = (packs_per_day × 30 × 220) / (24 × 60) # Converted to days
 ```
 
-**2. Cost**
+### Financial Calculations
 
-**Monthly Cost:**
-
-```sql
-Monthly Cost = Packs per Day × 30 × Cost per Pack
+Monthly and annual cost projections:
+```python
+monthly_cost = packs_per_day × 30 × cost_per_pack
+yearly_cost = monthly_cost × 12
 ```
 
-**Yearly Cost:**
+### Investment Projection
 
-```java
-Yearly Cost = Monthly Cost × 12
+The compound interest formula used for investment calculations:
+```python
+future_value = monthly_contribution × ((1 + r)^n - 1) / r
+# where:
+# r = monthly interest rate (annual_rate ÷ 12)
+# n = number of months
 ```
 
-**3. Investment Projection**
+## Project Structure
 
-A simple compound interest formula is used for investment projection:
-
-```css
-Future Value = Monthly Contribution × [(1 + r)^n - 1] / r
 ```
-
-Where:
-
-* r = Monthly interest rate (annual rate ÷ 12)
-* n = Number of months
-
----
-
-##  Multi-Language Support
-
-The application supports the following languages:
-
-* English (default)
-* Turkish
-* Azerbaijani
-
-You can switch the language using the dropdown menu in the header.
-
----
-
-##  Project Structure
-
-```csharp
 smokex-calculator/
-│
-├── app.py                # Main Flask application
-├── requirements.txt      # Python dependencies
+├── app/
+│   ├── __init__.py
+│   ├── routes.py
+│   └── models.py
 ├── static/
 │   ├── css/
-│   │   └── style.css     # Custom styles
-│   ├── img/
-│   │   └── mb-new.png    # SmokeX logo
-│   └── js/
-│       └── script.js     # Optional JS for interactivity
+│   │   └── style.css
+│   ├── js/
+│   │   └── script.js
+│   └── img/
+│       └── mb-new.png
 ├── templates/
-│   ├── index.html        # Main calculator page
-│   ├── faq.html          # FAQ page
-│   └── base.html         # Reusable layout template
-└── README.md             # Project documentation
+│   ├── base.html
+│   ├── index.html
+│   └── faq.html
+├── translations/
+│   ├── tr/
+│   └── az/
+├── requirements.txt
+├── config.py
+└── README.md
 ```
 
+## Technology Stack
+
+### Backend
+- Flask (Python web framework)
+- Flask-Babel (Internationalization)
+- SQLAlchemy (ORM)
+
+### Frontend
+- HTML5 & CSS3
+- Bootstrap 5
+- Chart.js
+- JavaScript
+
+## Localization
+
+Currently supported languages:
+- English (default)
+- Turkish
+- Azerbaijani
+
+Language preferences can be modified through the UI's language selector.
+
+## License
+
+Released under the MIT License. See [LICENSE](LICENSE) for details.
+
+## Author
+
+Created by Sadat Nazarli
+- GitHub: [@sadatnazarli](https://github.com/sadatnazarli)
+
 ---
 
-##  Technologies Used
-
-* Backend: Flask (Python)
-* Frontend: HTML5, CSS3 (Bootstrap 5), JavaScript (Chart.js)
-* Localization: Flask-Babel for multi-language support
-
----
-
-##  License
-
-This project is licensed under the MIT License.
-
----
-
-## ‍ Author
-
-GitHub: sadatnazarli
-
----
-
+**Note:** For bug reports, feature requests, or contributions, please open an issue or submit a pull request on GitHub.
